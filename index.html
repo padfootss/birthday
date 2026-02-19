@@ -19,7 +19,6 @@
     flex-direction: column;
   }
 
-  /* Başlık Tam Orta */
   .header-container {
     flex: 1;
     display: flex;
@@ -36,7 +35,6 @@
     width: 100%;
   }
 
-  /* Mesaj Kutusu */
   .message-container {
     height: 180px;
     padding: 0 20px;
@@ -52,10 +50,9 @@
     max-width: 100%;
   }
 
-  /* Butonlar */
   .button-area {
     padding-bottom: 50px;
-    height: 80px;
+    height: 90px;
   }
 
   button {
@@ -74,13 +71,13 @@
 
   .hidden { display: none !important; }
 
-  /* Animasyonlar */
   .emoji {
     position: absolute;
     font-size: 25px;
     animation: fall 3s linear forwards;
     pointer-events: none;
   }
+
   @keyframes fall {
     from { transform: translateY(-10vh); }
     to { transform: translateY(110vh); }
@@ -100,7 +97,7 @@
 <body>
 
 <div class="header-container">
-  <h1 id="mainTitle">İYİ Kİ VARSIN ABLAM 💖</h1>
+  <h1>İYİ Kİ VARSIN ABLAM 💖</h1>
 </div>
 
 <div class="message-container">
@@ -137,44 +134,66 @@ function typeWriter(text) {
 }
 
 function startEverything() {
-  // iPhone'da sesi tetiklemenin tek yolu bu fonksiyondur
-  music.play();
-  
+
+  // Güvenli müzik başlatma
+  music.currentTime = 0;
+  music.play().catch(() => {});
+
   document.getElementById("btn1").classList.add("hidden");
-  
+
   let count = 3;
   let timer = setInterval(() => {
     cd.innerText = count;
+
     if(count <= 0) {
       clearInterval(timer);
       cd.innerText = "🎂";
+
       setTimeout(() => {
         cd.innerText = "";
         emojiRain();
-        typeWriter("İyi ki varsın ablam… Hayatımda senin yerini doldurabilecek diğer ablamlarim hariç kimse yok hssbwjwwj Sen benim için sadece bir abla değil, bazen annem, bazen sırdaşım, bazen de en yakın arkadaşımsın. Sen yanımdayken kendimi hep daha güvende hissediyorum.");
+        typeWriter("İyi ki varsın ablam… Sen benim için sadece bir abla değil, bazen annem, bazen sırdaşım, bazen de en yakın arkadaşımsın. Sen yanımdayken kendimi hep daha güvende hissediyorum.");
         document.getElementById("btn2").classList.remove("hidden");
       }, 800);
     }
+
     count--;
   }, 1000);
 }
 
 function step2() {
   emojiRain();
-  typeWriter("Çocukluğumun en güzel anılarında hep sen de varsın. Seninle büyümek benim en büyük şansımlarimdan biri oldu.");
+  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın. Seninle büyümek benim en büyük şanslarımdan biri oldu.");
   document.getElementById("btn2").classList.add("hidden");
   document.getElementById("btn3").classList.remove("hidden");
 }
 
 function step3() {
   emojiRain();
-  typeWriter("Hem güçlü hem de merhametli olduğun için seninle gurur duyuyorum abla 🥹. Hayat sana hep en güzelini getirsin, yüzün hep gülsün, kalbin hep huzur dolu olsun. Çünkü sen her şeyin en iyisini hak ediyorsun.");
+  typeWriter("Hem güçlü hem merhametli olduğun için seninle gurur duyuyorum 🥹 Hayat sana hep en güzelini getirsin.");
   document.getElementById("btn3").classList.add("hidden");
   document.getElementById("btn4").classList.remove("hidden");
 }
 
 function step4() {
   emojiRain();
-  typeWriter("İyi ki benim ablam olmuşsun… İyi ki aynı çatı altında büyümüşüz. Seni kelimelerle anlatamayacak kadar çok seviyorum. Doğum günün kutlu olsun, canımın en kıymetlisi. 🤍🎂✨");
-  document.getElementById("btn4").innerText = "Seni Çok Seviyorum
-  
+  typeWriter("İyi ki benim ablam olmuşsun… Seni kelimelerle anlatamayacak kadar çok seviyorum 🤍🎂✨");
+
+  document.getElementById("btn4").innerText = "Seni Çok Seviyorum 🤍";
+  document.getElementById("btn4").disabled = true;
+}
+
+function emojiRain() {
+  for(let i=0;i<25;i++){
+    let emoji=document.createElement("div");
+    emoji.className="emoji";
+    emoji.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
+    emoji.style.left=Math.random()*100+"vw";
+    document.body.appendChild(emoji);
+    setTimeout(()=>emoji.remove(),3000);
+  }
+}
+</script>
+
+</body>
+</html>
