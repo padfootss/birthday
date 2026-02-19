@@ -2,107 +2,97 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>İYİ Kİ DOĞDUN 🔥</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İyi Ki Doğdun Ablam 💖</title>
 
 <style>
-body {
+
+body{
   margin:0;
   overflow:hidden;
-  font-family:Arial, sans-serif;
-  text-align:center;
+  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
+  background:black;
   color:white;
-  animation:bgChange 2s infinite linear;
+  text-align:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  flex-direction:column;
+  transition:background 2s ease;
 }
 
-@keyframes bgChange {
-  0%{background:#ff0080;}
-  25%{background:#00f7ff;}
-  50%{background:#00ff73;}
-  75%{background:#ffea00;}
-  100%{background:#ff0080;}
+/* Neon ABLAM */
+.neon{
+  font-size:clamp(40px,10vw,80px);
+  color:#ff66cc;
+  text-shadow:
+    0 0 5px #ff66cc,
+    0 0 10px #ff66cc,
+    0 0 20px #ff1493,
+    0 0 40px #ff1493;
+  margin:0;
 }
 
-h1 {
-  margin-top:120px;
-  font-size:60px;
-  animation:jump 0.5s infinite alternate, shake 0.1s infinite;
+#message{
+  font-size:22px;
+  margin-top:20px;
+  min-height:40px;
 }
 
-@keyframes jump {
-  from{transform:translateY(0);}
-  to{transform:translateY(-30px);}
-}
-
-@keyframes shake {
-  0%{transform:translate(0,0);}
-  25%{transform:translate(5px,-5px);}
-  50%{transform:translate(-5px,5px);}
-  75%{transform:translate(5px,5px);}
-  100%{transform:translate(0,0);}
-}
-
-button {
-  padding:20px 40px;
-  font-size:20px;
-  border:none;
-  border-radius:30px;
-  background:white;
-  color:black;
-  cursor:pointer;
-  margin-top:40px;
-}
-
-.emoji {
+/* Yıldız */
+.star{
   position:absolute;
-  font-size:30px;
+  width:2px;
+  height:2px;
+  background:white;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:0.2;}
+  to{opacity:1;}
+}
+
+/* Konfeti */
+.confetti{
+  position:absolute;
+  width:8px;
+  height:8px;
   animation:fall 3s linear forwards;
 }
 
-@keyframes fall {
-  0%{top:-50px;}
-  100%{top:100vh;}
+@keyframes fall{
+  from{transform:translateY(-50px) rotate(0deg);}
+  to{transform:translateY(110vh) rotate(720deg);}
 }
 
-.confetti {
-  position:absolute;
-  width:10px;
-  height:10px;
-  animation:confettiFall 3s linear forwards;
+/* Işık çerçeve */
+.border-light{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  box-shadow:0 0 40px 10px rgba(255,105,180,0.6) inset;
+  animation:borderGlow 3s infinite alternate;
 }
 
-@keyframes confettiFall {
-  0%{top:-20px; transform:rotate(0deg);}
-  100%{top:100vh; transform:rotate(720deg);}
+@keyframes borderGlow{
+  from{box-shadow:0 0 20px 5px rgba(255,105,180,0.3) inset;}
+  to{box-shadow:0 0 60px 15px rgba(255,105,180,0.8) inset;}
 }
 
-.glitch {
-  position:absolute;
-  font-size:80px;
-  top:40%;
-  width:100%;
-  animation:glitch 0.2s infinite;
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  margin-top:20px;
+  cursor:pointer;
 }
 
-@keyframes glitch {
-  0%{transform:translate(0);}
-  20%{transform:translate(-10px,10px);}
-  40%{transform:translate(10px,-10px);}
-  60%{transform:translate(-10px,-10px);}
-  80%{transform:translate(10px,10px);}
-  100%{transform:translate(0);}
-}
-
-.burst {
-  position:absolute;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  animation:burstAnim 1s forwards;
-}
-
-@keyframes burstAnim {
-  0%{opacity:1; transform:scale(1);}
-  100%{opacity:0; transform:scale(5);}
+#countdown{
+  font-size:60px;
+  margin-top:20px;
 }
 
 </style>
@@ -110,62 +100,85 @@ button {
 
 <body>
 
-<h1>İYİ Kİ DOĞDUN 💖🔥</h1>
-<button onclick="startChaos()">KAOSU BAŞLAT</button>
+<div class="border-light"></div>
 
-<audio id="music" loop>
+<h1 class="neon">ABLAM 💖</h1>
+<div id="countdown"></div>
+<div id="message"></div>
+<button onclick="startShow()">Başlat ✨</button>
+
+<audio id="music" loop playsinline>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-function startChaos(){
+/* Yıldızlı gece oluştur */
+for(let i=0;i<150;i++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.left=Math.random()*100+"vw";
+  star.style.top=Math.random()*100+"vh";
+  star.style.animationDuration=(Math.random()*2+1)+"s";
+  document.body.appendChild(star);
+}
+
+function startShow(){
 
   document.getElementById("music").play();
 
-  // Telefon titreşim (destekleyen cihazlarda)
-  if (navigator.vibrate) {
-    navigator.vibrate([200,100,200,100,500]);
-  }
+  let count=3;
+  let countdownEl=document.getElementById("countdown");
+  countdownEl.innerText=count;
 
-  // Emoji yağmuru
-  setInterval(()=>{
-    let emoji = document.createElement("div");
-    emoji.classList.add("emoji");
-    emoji.innerHTML = ["💖","🔥","🎉","🎂","💃","🥳"][Math.floor(Math.random()*6)];
-    emoji.style.left = Math.random()*100 + "vw";
-    document.body.appendChild(emoji);
-    setTimeout(()=>emoji.remove(),3000);
-  },100);
-
-  // Konfeti
-  setInterval(()=>{
-    let c = document.createElement("div");
-    c.classList.add("confetti");
-    c.style.left = Math.random()*100 + "vw";
-    c.style.background = `hsl(${Math.random()*360},100%,50%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
-  },80);
-
-  // HAPPY BIRTHDAY patlaması
-  let text = document.createElement("div");
-  text.classList.add("glitch");
-  text.innerHTML="HAPPY BIRTHDAY 🎉";
-  document.body.appendChild(text);
-
+  let interval=setInterval(()=>{
+    count--;
+    if(count>0){
+      countdownEl.innerText=count;
+    }else{
+      clearInterval(interval);
+      countdownEl.innerText="🎉";
+      setTimeout(()=>{
+        countdownEl.innerText="";
+        launchConfetti();
+        typeMessage("İyi ki doğdun ablam... Sen benim en büyük şansımsın 💖");
+        romanticMode();
+      },800);
+    }
+  },1000);
 }
 
-// Mouse hareketine renk patlaması
-document.addEventListener("mousemove",(e)=>{
-  let burst = document.createElement("div");
-  burst.classList.add("burst");
-  burst.style.left=e.clientX+"px";
-  burst.style.top=e.clientY+"px";
-  burst.style.background=`hsl(${Math.random()*360},100%,50%)`;
-  document.body.appendChild(burst);
-  setTimeout(()=>burst.remove(),1000);
-});
+/* Harf harf yazma */
+function typeMessage(text){
+  let i=0;
+  let msg=document.getElementById("message");
+  msg.innerText="";
+  let typing=setInterval(()=>{
+    msg.innerText+=text.charAt(i);
+    i++;
+    if(i>=text.length) clearInterval(typing);
+  },50);
+}
+
+/* Konfeti */
+function launchConfetti(){
+  for(let i=0;i<200;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+/* Pastel romantik moda geçiş */
+function romanticMode(){
+  setTimeout(()=>{
+    document.body.style.background=
+      "linear-gradient(45deg,#ffdde1,#ee9ca7)";
+  },4000);
+}
 
 </script>
 
