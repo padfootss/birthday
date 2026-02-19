@@ -1,259 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>İyi ki Varsın Ablam 💖</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  text-align:center;
-  color:white;
-  background:black;
-  overflow-x:hidden;
-  animation:bgChange 6s infinite linear;
-  transition:background 2s ease;
-}
+  :root {
+    --neon-color: #ff66cc;
+    --glow-color: #ff1493;
+  }
 
-/* Arka plan animasyon */
-@keyframes bgChange{
-  0%{background:#0f0c29;}
-  50%{background:#302b63;}
-  100%{background:#0f0c29;}
-}
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-align: center;
+    color: white;
+    background: #0f0c29;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    transition: background 2s ease;
+  }
 
-/* Neon başlık */
-h1{
-  margin-top:60px;
-  font-size:clamp(28px,8vw,60px);
-  color:#ff66cc;
-  text-shadow:
-    0 0 5px #ff66cc,
-    0 0 10px #ff66cc,
-    0 0 20px #ff1493,
-    0 0 40px #ff1493;
-}
+  @keyframes bgChange {
+    0% { background: #0f0c29; }
+    50% { background: #302b63; }
+    100% { background: #0f0c29; }
+  }
+  body.active-bg { animation: bgChange 6s infinite linear; }
 
-/* Butonlar alt alta */
-.buttons{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-  margin-top:25px;
-}
+  /* Ana Başlık - Tam Orta */
+  .header-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
 
-button{
-  padding:12px 25px;
-  font-size:16px;
-  border:none;
-  border-radius:25px;
-  background:white;
-  color:black;
-  cursor:pointer;
-  width:220px;
-}
+  h1 {
+    font-size: clamp(35px, 10vw, 70px);
+    color: var(--neon-color);
+    text-shadow: 0 0 10px var(--neon-color), 0 0 20px var(--glow-color), 0 0 40px var(--glow-color);
+    margin: 0;
+    line-height: 1.2;
+    word-break: break-word;
+    width: 90%;
+  }
 
-/* Mesaj alanı */
-.message{
-  font-size:20px;
-  margin-top:25px;
-  padding:15px;
-  min-height:60px;
-  max-width:90%;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:center;
-  word-wrap:break-word;
-}
+  /* Buton Alanı */
+  .buttons {
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 10;
+  }
 
-/* Yıldız */
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  background:white;
-  animation:twinkle 2s infinite alternate;
-}
+  button {
+    padding: 15px 25px;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #302b63;
+    cursor: pointer;
+    width: 85%;
+    max-width: 300px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: opacity 0.5s ease, transform 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@keyframes twinkle{
-  from{opacity:0.2;}
-  to{opacity:1;}
-}
+  button:active { transform: scale(0.95); }
+  .hidden { display: none; opacity: 0; }
 
-/* Emoji */
-.emoji{
-  position:absolute;
-  font-size:28px;
-  animation:fall 3s linear forwards;
-}
+  /* Mesaj Kutusu - Yazılar Aşağı Kayar */
+  .message {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px auto 30px auto;
+    min-height: 120px;
+    width: 85%;
+    line-height: 1.6;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
 
-@keyframes fall{
-  0%{top:-50px;}
-  100%{top:100vh;}
-}
+  /* Efektler */
+  .star { position: absolute; width: 2px; height: 2px; background: white; border-radius: 50%; pointer-events: none; }
+  .emoji { position: absolute; font-size: 32px; animation: fall 3s linear forwards; pointer-events: none; }
+  .confetti { position: absolute; width: 10px; height: 10px; animation: confettiFall 3s linear forwards; pointer-events: none; }
 
-/* Konfeti */
-.confetti{
-  position:absolute;
-  width:8px;
-  height:8px;
-  animation:confettiFall 3s linear forwards;
-}
+  @keyframes fall { 0% { transform: translateY(-50px); } 100% { transform: translateY(110vh); } }
+  @keyframes confettiFall { 0% { transform: translateY(-50px) rotate(0deg); } 100% { transform: translateY(110vh) rotate(720deg); } }
 
-@keyframes confettiFall{
-  0%{transform:translateY(-50px) rotate(0deg);}
-  100%{transform:translateY(110vh) rotate(720deg);}
-}
+  .border-light {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: 0 0 30px 10px rgba(255,105,180,0.4) inset;
+    z-index: 100;
+  }
 
-/* Işık çerçevesi */
-.border-light{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  box-shadow:0 0 40px 10px rgba(255,105,180,0.6) inset;
-  animation:borderGlow 3s infinite alternate;
-}
-
-@keyframes borderGlow{
-  from{box-shadow:0 0 20px 5px rgba(255,105,180,0.3) inset;}
-  to{box-shadow:0 0 60px 15px rgba(255,105,180,0.8) inset;}
-}
-
-#countdown{
-  font-size:60px;
-  margin-top:20px;
-}
+  #countdown {
+    font-size: 60px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1000;
+  }
 </style>
 </head>
-
 <body>
 
 <div class="border-light"></div>
 
-<h1>İYİ Kİ VARSIN ABLAM 💖🔥</h1>
+<div class="header-container">
+  <h1 id="mainTitle">İYİ Kİ VARSIN ABLAM 💖</h1>
+</div>
+
+<div class="message" id="messageBox"></div>
 
 <div class="buttons">
-  <button onclick="startShow()">Parti Başlat 🎉</button>
-  <button onclick="showMessage1()">Sen En İyisisin 👑</button>
-  <button onclick="showMessage2()">Dilek Tut ✨</button>
-  <button onclick="showMessage3()">Sürpriz 💌</button>
+  <button id="btn1" onclick="startShow()">Partiyi Başlat 🎉</button>
+  <button id="btn2" class="hidden" onclick="step2()">Devam Et... ✨</button>
+  <button id="btn3" class="hidden" onclick="step3()">Daha Fazlası... 🥹</button>
+  <button id="btn4" class="hidden" onclick="step4()">Son Mesajım 🤍</button>
 </div>
 
 <div id="countdown"></div>
-<div class="message" id="messageBox"></div>
 
 <audio id="music" loop playsinline>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+let music = document.getElementById("music");
+const msgBox = document.getElementById("messageBox");
 
-let music=document.getElementById("music");
-
-/* Yıldız oluştur */
-for(let i=0;i<120;i++){
-  let star=document.createElement("div");
-  star.className="star";
-  star.style.left=Math.random()*100+"vw";
-  star.style.top=Math.random()*100+"vh";
-  star.style.animationDuration=(Math.random()*2+1)+"s";
+// Arka plan yıldızları
+for(let i=0; i<80; i++){
+  let star = document.createElement("div");
+  star.className = "star";
+  star.style.left = Math.random()*100+"vw";
+  star.style.top = Math.random()*100+"vh";
   document.body.appendChild(star);
 }
 
-function startShow(){
-
-  music.play().catch(()=>{});
-
-  let count=3;
-  let countdownEl=document.getElementById("countdown");
-  countdownEl.innerText=count;
-
-  let interval=setInterval(()=>{
-    count--;
-    if(count>0){
-      countdownEl.innerText=count;
-    }else{
-      clearInterval(interval);
-      countdownEl.innerText="🎉";
-      setTimeout(()=>{
-        countdownEl.innerText="";
-        startChaos();
-        typeWriter("İyi ki varsın ablam... Seni dünyadaki her şeyden çok seviyorum 💖");
-      },800);
-    }
-  },1000);
+function typeWriter(text) {
+  let i = 0;
+  msgBox.innerText = "";
+  let typing = setInterval(() => {
+    msgBox.innerText += text.charAt(i);
+    i++;
+    if(i >= text.length) clearInterval(typing);
+  }, 40);
 }
 
-function startChaos(){
+function showNextButton(hideId, showId) {
+    document.getElementById(hideId).style.display = "none";
+    if(showId) {
+        const nextBtn = document.getElementById(showId);
+        nextBtn.style.display = "block";
+        setTimeout(() => nextBtn.style.opacity = "1", 50);
+    }
+}
+
+function startShow() {
+  music.play().catch(() => {});
+  document.body.classList.add('active-bg');
+  let count = 3;
+  let countdownEl = document.getElementById("countdown");
+  document.getElementById("btn1").style.opacity = "0";
+  
+  let interval = setInterval(() => {
+    countdownEl.innerText = count;
+    if(count <= 0) {
+      clearInterval(interval);
+      countdownEl.innerText = "🎂";
+      setTimeout(() => {
+        countdownEl.innerText = "";
+        emojiRain();
+        typeWriter("İyi ki varsın ablam… Hayatımda senin yerini doldurabilecek diğer ablamlarim hariç kimse yok hssbwjwwj Sen benim için sadece bir abla değil, bazen annem, bazen sırdaşım, bazen de en yakın arkadaşımsın. Sen yanımdayken kendimi hep daha güvende hissediyorum.");
+        showNextButton('btn1', 'btn2');
+      }, 800);
+    }
+    count--;
+  }, 1000);
+}
+
+function step2() {
+  emojiRain();
+  typeWriter("Çocukluğumun en güzel anılarında hep sen de varsın. Seninle büyümek benim en büyük şansımlarimdan biri oldu.");
+  showNextButton('btn2', 'btn3');
+}
+
+function step3() {
+  emojiRain();
+  typeWriter("Hem güçlü hem de merhametli olduğun için seninle gurur duyuyorum abla 🥹. Hayat sana hep en güzelini getirsin, yüzün hep gülsün, kalbin hep huzur dolu olsun. Çünkü sen her şeyin en iyisini hak ediyorsun.");
+  showNextButton('btn3', 'btn4');
+}
+
+function step4() {
   emojiRain();
   confettiBlast();
-
-  setTimeout(()=>{
-    document.body.style.background="linear-gradient(45deg,#ffdde1,#ee9ca7)";
-  },5000);
+  typeWriter("İyi ki benim ablam olmuşsun… İyi ki aynı çatı altında büyümüşüz. Seni kelimelerle anlatamayacak kadar çok seviyorum. Doğum günün kutlu olsun, canımın en kıymetlisi. 🤍🎂✨");
+  document.getElementById("btn4").innerText = "Seni Çok Seviyorum! ❤️";
 }
 
-function emojiRain(){
-  let interval=setInterval(()=>{
-    let emoji=document.createElement("div");
-    emoji.className="emoji";
-    emoji.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
-    emoji.style.left=Math.random()*100+"vw";
-    document.body.appendChild(emoji);
-    setTimeout(()=>emoji.remove(),3000);
-  },200);
-
-  setTimeout(()=>clearInterval(interval),5000);
-}
-
-function confettiBlast(){
-  for(let i=0;i<150;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
+function emojiRain() {
+  for(let i=0; i<15; i++) {
+    setTimeout(() => {
+      let emoji = document.createElement("div");
+      emoji.className = "emoji";
+      emoji.innerHTML = ["💖","🎂","🎉","🥳","👑","🌸","✨"][Math.floor(Math.random()*7)];
+      emoji.style.left = Math.random()*85+"vw";
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 3000);
+    }, i * 100);
   }
 }
 
-function typeWriter(text){
-  let i=0;
-  let msg=document.getElementById("messageBox");
-  msg.innerText="";
-
-  let typing=setInterval(()=>{
-    msg.innerText+=text.charAt(i);
-    i++;
-
-    window.scrollTo({
-      top:document.body.scrollHeight,
-      behavior:"smooth"
-    });
-
-    if(i>=text.length) clearInterval(typing);
-  },50);
+function confettiBlast() {
+  for(let i=0; i<100; i++) {
+    let c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = `hsl(${Math.random()*360}, 100%, 70%)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
 }
-
-function showMessage1(){
-  emojiRain();
-  typeWriter("İyi ki varsın ablam 💖 Hayatımın en güzel şansı sensin 👑");
-}
-
-function showMessage2(){
-  emojiRain();
-  typeWriter("Yeni yaşın sana sağlık, mutluluk ve bol kahkaha getirsin ✨");
-}
-
-function showMessage3(){
-  emojiRain();
-  confettiBlast();
-  typeWriter("Seni çok seviyorum 💌 Bu site bile sevgimi anlatmaya yetmez!");
-}
-
 </script>
 
 </body>
