@@ -136,6 +136,8 @@ button {
 
 <script>
 
+let music = document.getElementById("music");
+
 /* Yıldız oluştur */
 for(let i=0;i<120;i++){
   let star=document.createElement("div");
@@ -148,7 +150,10 @@ for(let i=0;i<120;i++){
 
 function startShow(){
 
-  document.getElementById("music").play();
+  // Müzik başlat (hata yakalama ile)
+  music.play().catch(()=>{
+    alert("Müzik çalmadı! music.mp3 dosyasını kontrol et.");
+  });
 
   let count=3;
   let countdownEl=document.getElementById("countdown");
@@ -172,8 +177,16 @@ function startShow(){
 
 function startChaos(){
 
-  // Emoji yağmuru
-  setInterval(()=>{
+  emojiRain();
+  confettiBlast();
+
+  setTimeout(()=>{
+    document.body.style.background="linear-gradient(45deg,#ffdde1,#ee9ca7)";
+  },5000);
+}
+
+function emojiRain(){
+  let interval = setInterval(()=>{
     let emoji=document.createElement("div");
     emoji.className="emoji";
     emoji.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
@@ -182,7 +195,10 @@ function startChaos(){
     setTimeout(()=>emoji.remove(),3000);
   },200);
 
-  // Konfeti patlaması
+  setTimeout(()=>clearInterval(interval),5000);
+}
+
+function confettiBlast(){
   for(let i=0;i<150;i++){
     let c=document.createElement("div");
     c.className="confetti";
@@ -191,11 +207,6 @@ function startChaos(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
   }
-
-  // 5 saniye sonra pastel moda geç
-  setTimeout(()=>{
-    document.body.style.background="linear-gradient(45deg,#ffdde1,#ee9ca7)";
-  },5000);
 }
 
 /* Harf harf yazı */
@@ -211,18 +222,21 @@ function typeWriter(text){
 }
 
 function showMessage1(){
+  emojiRain();
   typeWriter("İyi ki varsın ablam 💖 Hayatımın en güzel şansı sensin 👑");
 }
 
 function showMessage2(){
+  emojiRain();
   typeWriter("Yeni yaşın sana sağlık, mutluluk ve bol kahkaha getirsin ✨");
 }
 
 function showMessage3(){
+  emojiRain();
+  confettiBlast();
   typeWriter("Seni çok seviyorum 💌 Bu site bile sevgimi anlatmaya yetmez!");
 }
 
 </script>
-
 </body>
 </html>
