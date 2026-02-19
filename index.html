@@ -3,49 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi Ki Doğdun ❤️</title>
+<title>İyi Ki Doğdun 💖</title>
+
 <style>
 body {
   margin:0;
   overflow:hidden;
-  background: linear-gradient(135deg,#ff9acb,#ffc3e6);
-  text-align:center;
-  font-family:Arial;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #ff8fd8, #ff4da6);
   color:white;
+  text-align:center;
 }
+
+h1 {
+  margin-top:100px;
+  font-size:40px;
+  text-shadow: 0 0 15px white;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px white; }
+  to { text-shadow: 0 0 30px yellow; }
+}
+
 button {
-  margin-top:120px;
-  padding:15px 30px;
+  padding:15px 40px;
   font-size:18px;
   border:none;
-  border-radius:30px;
+  border-radius:40px;
   background:white;
-  color:hotpink;
+  color:#ff4da6;
+  cursor:pointer;
+  transition:0.3s;
 }
+
+button:hover {
+  transform:scale(1.1);
+}
+
 #surprise {
   display:none;
   margin-top:20px;
   font-size:22px;
+  animation:fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity:0;}
+  to {opacity:1;}
+}
+
+.heart {
+  position:absolute;
+  top:-10px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform:translateY(100vh); }
+}
+
+.confetti {
+  position:absolute;
+  width:8px;
+  height:8px;
+  animation:confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall {
+  to { transform:translateY(100vh) rotate(720deg); }
+}
+
+#ambulance {
+  position:absolute;
+  top:60%;
+  left:-200px;
+  font-size:70px;
+  display:none;
+  animation:drive 6s linear forwards;
+}
+
+@keyframes drive {
+  to { left:110%; }
+}
+
+#photo {
+  width:180px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 0 20px white;
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<button id="btn">BAŞLAT 💕</button>
+<h1>Hazır mısın? 🎉</h1>
+<button onclick="start()">SÜRPRİZİ AÇ 💕</button>
 
 <div id="surprise">
-İYİ Kİ DOĞDUN ❤️<br><br>
-Kalbimi çaldın 😭🚑
+  İYİ Kİ DOĞDUN ❤️<br><br>
+  Hayatımın en güzel tesadüfü sensin ✨<br>
+  Kalbimi çaldın... ambulansla geri getir 🚑💖
 </div>
+
+<img id="photo" src="foto.jpg">
+
+<div id="ambulance">🚑</div>
 
 <audio id="music" src="muzik.mp3" loop></audio>
 
 <script>
-document.getElementById("btn").addEventListener("click", function() {
-  document.getElementById("surprise").style.display = "block";
+function start() {
+  document.getElementById("surprise").style.display="block";
+  document.getElementById("photo").style.display="block";
   document.getElementById("music").play();
-});
+  document.getElementById("ambulance").style.display="block";
+  createConfetti();
+}
+
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(Math.random()*3+2)+"s";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+setInterval(createHeart,300);
+
+function createConfetti(){
+  for(let i=0;i<200;i++){
+    const c=document.createElement("div");
+    c.classList.add("confetti");
+    c.style.left=Math.random()*100+"vw";
+    c.style.backgroundColor=
+      "hsl("+Math.random()*360+",100%,50%)";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
 </script>
 
 </body>
