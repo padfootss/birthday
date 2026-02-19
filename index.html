@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi ki Varsın Ablam 💖</title>
+<title>İyi ki Varsın BÜşra Ablam 💖</title>
 
 <style>
 body{
@@ -19,9 +19,10 @@ body{
   justify-content:center;
   align-items:center;
   position:relative;
+  perspective:1000px;
 }
 
-/* 🌟 Kenar Işık Çerçeve */
+/* 🌟 Kenar Glow */
 body::before{
   content:"";
   position:absolute;
@@ -31,20 +32,59 @@ body::before{
   pointer-events:none;
 }
 
-/* 💓 Büyük Atan Kalp */
-.big-heart{
-  font-size:120px;
-  animation:heartbeat 1.2s infinite;
-  margin-bottom:20px;
-  filter:drop-shadow(0 0 20px #ff4d6d);
+/* 💓 3D Gerçek Kalp */
+.heart-wrapper{
+  width:150px;
+  height:150px;
+  position:relative;
+  transform-style:preserve-3d;
+  animation:rotate3d 8s linear infinite;
+  margin-bottom:30px;
 }
 
-@keyframes heartbeat{
-  0%{transform:scale(1);}
-  25%{transform:scale(1.2);}
-  40%{transform:scale(1);}
-  60%{transform:scale(1.15);}
-  100%{transform:scale(1);}
+.heart{
+  width:100px;
+  height:100px;
+  background:#ff2e63;
+  position:absolute;
+  top:25px;
+  left:25px;
+  transform:rotate(-45deg);
+  animation:beat 1.2s infinite;
+  box-shadow:0 0 40px #ff2e63;
+}
+
+.heart:before,
+.heart:after{
+  content:"";
+  width:100px;
+  height:100px;
+  background:#ff2e63;
+  border-radius:50%;
+  position:absolute;
+}
+
+.heart:before{
+  top:-50px;
+  left:0;
+}
+
+.heart:after{
+  left:50px;
+  top:0;
+}
+
+@keyframes beat{
+  0%{transform:rotate(-45deg) scale(1);}
+  25%{transform:rotate(-45deg) scale(1.15);}
+  40%{transform:rotate(-45deg) scale(1);}
+  60%{transform:rotate(-45deg) scale(1.1);}
+  100%{transform:rotate(-45deg) scale(1);}
+}
+
+@keyframes rotate3d{
+  0%{transform:rotateY(0deg);}
+  100%{transform:rotateY(360deg);}
 }
 
 h1{
@@ -60,7 +100,7 @@ h1{
   white-space:pre-line;
 }
 
-/* 💎 Estetik Buton */
+/* 💎 Butonlar */
 button{
   padding:15px 30px;
   margin:10px;
@@ -82,7 +122,6 @@ button:hover{
   box-shadow:0 0 25px #fff, 0 0 40px #ff4d6d;
 }
 
-/* ✨ Buton Kenar Işığı */
 button::after{
   content:"";
   position:absolute;
@@ -95,10 +134,8 @@ button::after{
 
 .hidden{display:none;}
 
-/* 💖 Kalp Parçacıkları */
-.heart{
+.heart-particle{
   position:absolute;
-  color:#fff;
   animation:floatUp linear forwards;
 }
 
@@ -110,15 +147,17 @@ button::after{
 </head>
 <body>
 
-<div class="big-heart">💓</div>
-<h1>İYİ Kİ VARSIN ABLAM</h1>
+<div class="heart-wrapper">
+  <div class="heart"></div>
+</div>
 
+<h1>İYİ Kİ VARSIN BÜŞRA ABLAM</h1>
 <div id="messageBox"></div>
 
-<button id="btn1">Başlat 💖</button>
-<button id="btn2" class="hidden">2️⃣</button>
-<button id="btn3" class="hidden">3️⃣</button>
-<button id="btn4" class="hidden">4️⃣</button>
+<button id="btn1">Partiyi Başlat 🎉</button>
+<button id="btn2" class="hidden">Devam Et ✨</button>
+<button id="btn3" class="hidden">Daha Fazlası 🥹</button>
+<button id="btn4" class="hidden">Son Mesaj 🤍</button>
 
 <audio id="music" loop>
   <source src="./muzik.mp3" type="audio/mpeg">
@@ -142,7 +181,7 @@ function typeWriter(text){
 function heartRain(){
   for(let i=0;i<25;i++){
     let h=document.createElement("div");
-    h.className="heart";
+    h.className="heart-particle";
     h.textContent=["💖","💗","💞","💕","💓"][Math.floor(Math.random()*5)];
     h.style.left=Math.random()*100+"vw";
     h.style.fontSize=(20+Math.random()*25)+"px";
@@ -182,7 +221,7 @@ btn3.onclick=function(){
   heartRain();
   typeWriter(`Hem güçlü hem de merhametli olduğun için seninle gurur duyuyorum abla 🥹
 
-Hayat sana hep en güzelini getirsin,
+Allah sana hayatta hep en güzelini getirsin,
 yüzün hep gülsün,
 kalbin hep huzur dolu olsun.
 
@@ -199,7 +238,7 @@ btn4.onclick=function(){
 
 Seni kelimelerle anlatamayacak kadar çok seviyorum. 💖💞`);
   this.disabled=true;
-  this.textContent="Seni Çok Seviyorum 💖";
+  this.textContent="Seni Çok Seviyorum 🤍";
 };
 </script>
 
