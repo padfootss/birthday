@@ -11,57 +11,94 @@ body{
   font-family:-apple-system,system-ui,sans-serif;
   text-align:center;
   color:white;
-  display:flex;
-  flex-direction:column;
   height:100vh;
   overflow:hidden;
-  background: linear-gradient(-45deg, #ff758c, #ff7eb3, #a18cd1, #fad0c4);
-  background-size:400% 400%;
-  animation:gradientBG 12s ease infinite;
+  background: radial-gradient(circle at center, #ff758c, #a18cd1);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  position:relative;
 }
 
-@keyframes gradientBG{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+/* 🌟 Kenar Işık Çerçeve */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:4px solid rgba(255,255,255,0.3);
+  box-shadow:0 0 40px #ff4d6d, 0 0 80px #ff99cc inset;
+  pointer-events:none;
 }
 
-h1{
-  font-size:clamp(30px,8vw,60px);
-  margin:40px 20px 10px;
-  animation:pulse 2s infinite;
+/* 💓 Büyük Atan Kalp */
+.big-heart{
+  font-size:120px;
+  animation:heartbeat 1.2s infinite;
+  margin-bottom:20px;
+  filter:drop-shadow(0 0 20px #ff4d6d);
 }
 
-@keyframes pulse{
+@keyframes heartbeat{
   0%{transform:scale(1);}
-  50%{transform:scale(1.05);}
+  25%{transform:scale(1.2);}
+  40%{transform:scale(1);}
+  60%{transform:scale(1.15);}
   100%{transform:scale(1);}
 }
 
-#messageBox{
-  padding:20px;
-  font-size:19px;
-  line-height:1.9;
-  white-space:pre-line;
-  word-spacing:2px;
+h1{
+  font-size:32px;
+  margin-bottom:10px;
 }
 
-button{
-  padding:15px 25px;
-  margin:10px;
+#messageBox{
+  max-width:500px;
+  padding:20px;
   font-size:18px;
+  line-height:1.8;
+  white-space:pre-line;
+}
+
+/* 💎 Estetik Buton */
+button{
+  padding:15px 30px;
+  margin:10px;
+  font-size:17px;
   border:none;
-  border-radius:30px;
-  background:white;
-  color:#ff4d6d;
+  border-radius:40px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  color:white;
   font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 15px rgba(255,255,255,0.6);
+  position:relative;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px #fff, 0 0 40px #ff4d6d;
+}
+
+/* ✨ Buton Kenar Işığı */
+button::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:40px;
+  border:2px solid rgba(255,255,255,0.6);
+  box-shadow:0 0 15px #ff4d6d;
+  opacity:0.6;
 }
 
 .hidden{display:none;}
 
+/* 💖 Kalp Parçacıkları */
 .heart{
   position:absolute;
-  color:#ff4d6d;
+  color:#fff;
   animation:floatUp linear forwards;
 }
 
@@ -69,28 +106,19 @@ button{
   0%{transform:translateY(100vh) scale(1); opacity:1;}
   100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
 }
-
-#countdown{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:70px;
-}
 </style>
 </head>
 <body>
 
-<h1>İYİ Kİ VARSIN ABLAM 💖</h1>
+<div class="big-heart">💓</div>
+<h1>İYİ Kİ VARSIN ABLAM</h1>
 
 <div id="messageBox"></div>
 
-<button id="btn1">Başlat 🎉</button>
+<button id="btn1">Başlat 💖</button>
 <button id="btn2" class="hidden">2️⃣</button>
 <button id="btn3" class="hidden">3️⃣</button>
 <button id="btn4" class="hidden">4️⃣</button>
-
-<div id="countdown"></div>
 
 <audio id="music" loop>
   <source src="./muzik.mp3" type="audio/mpeg">
@@ -99,7 +127,6 @@ button{
 <script>
 const music=document.getElementById("music");
 const msgBox=document.getElementById("messageBox");
-const cd=document.getElementById("countdown");
 
 function typeWriter(text){
   let i=0;
