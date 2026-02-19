@@ -3,41 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi Ki Doğdun Ablam 💖</title>
+<title>İYİ Kİ DOĞDUN ABLAM 💖</title>
 
 <style>
-
-body{
+body {
   margin:0;
   overflow:hidden;
-  font-family:-apple-system, BlinkMacSystemFont, sans-serif;
-  background:black;
-  color:white;
+  font-family:Arial, sans-serif;
   text-align:center;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  flex-direction:column;
+  color:white;
+  background:black;
+  animation:bgChange 4s infinite linear;
   transition:background 2s ease;
 }
 
 /* Neon ABLAM */
-.neon{
-  font-size:clamp(40px,10vw,80px);
+h1 {
+  margin-top:60px;
+  font-size:clamp(30px,8vw,60px);
   color:#ff66cc;
   text-shadow:
     0 0 5px #ff66cc,
     0 0 10px #ff66cc,
     0 0 20px #ff1493,
     0 0 40px #ff1493;
-  margin:0;
 }
 
-#message{
-  font-size:22px;
-  margin-top:20px;
-  min-height:40px;
+/* Renk geçiş */
+@keyframes bgChange {
+  0%{background:#0f0c29;}
+  50%{background:#302b63;}
+  100%{background:#0f0c29;}
 }
 
 /* Yıldız */
@@ -54,17 +50,46 @@ body{
   to{opacity:1;}
 }
 
+button {
+  padding:12px 25px;
+  font-size:16px;
+  border:none;
+  border-radius:25px;
+  background:white;
+  color:black;
+  cursor:pointer;
+  margin:10px;
+}
+
+.message {
+  font-size:20px;
+  margin-top:20px;
+  padding:10px;
+  min-height:40px;
+}
+
+.emoji {
+  position:absolute;
+  font-size:28px;
+  animation:fall 3s linear forwards;
+}
+
+@keyframes fall {
+  0%{top:-50px;}
+  100%{top:100vh;}
+}
+
 /* Konfeti */
 .confetti{
   position:absolute;
   width:8px;
   height:8px;
-  animation:fall 3s linear forwards;
+  animation:confettiFall 3s linear forwards;
 }
 
-@keyframes fall{
-  from{transform:translateY(-50px) rotate(0deg);}
-  to{transform:translateY(110vh) rotate(720deg);}
+@keyframes confettiFall{
+  0%{transform:translateY(-50px) rotate(0deg);}
+  100%{transform:translateY(110vh) rotate(720deg);}
 }
 
 /* Işık çerçeve */
@@ -81,15 +106,6 @@ body{
   to{box-shadow:0 0 60px 15px rgba(255,105,180,0.8) inset;}
 }
 
-button{
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  font-size:16px;
-  margin-top:20px;
-  cursor:pointer;
-}
-
 #countdown{
   font-size:60px;
   margin-top:20px;
@@ -102,19 +118,26 @@ button{
 
 <div class="border-light"></div>
 
-<h1 class="neon">ABLAM 💖</h1>
+<h1>İYİ Kİ DOĞDUN ABLAM 💖🔥</h1>
+
+<div>
+  <button onclick="startShow()">Parti Başlat 🎉</button>
+  <button onclick="showMessage1()">Sen En İyisisin 👑</button>
+  <button onclick="showMessage2()">Dilek Tut ✨</button>
+  <button onclick="showMessage3()">Sürpriz 💌</button>
+</div>
+
 <div id="countdown"></div>
-<div id="message"></div>
-<button onclick="startShow()">Başlat ✨</button>
+<div class="message" id="messageBox"></div>
 
 <audio id="music" loop playsinline>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="muzik.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* Yıldızlı gece oluştur */
-for(let i=0;i<150;i++){
+/* Yıldız oluştur */
+for(let i=0;i<120;i++){
   let star=document.createElement("div");
   star.className="star";
   star.style.left=Math.random()*100+"vw";
@@ -140,18 +163,45 @@ function startShow(){
       countdownEl.innerText="🎉";
       setTimeout(()=>{
         countdownEl.innerText="";
-        launchConfetti();
-        typeMessage("İyi ki doğdun ablam... Sen benim en büyük şansımsın 💖");
-        romanticMode();
+        startChaos();
+        typeWriter("İyi ki doğdun ablam... Seni dünyadaki her şeyden çok seviyorum 💖");
       },800);
     }
   },1000);
 }
 
-/* Harf harf yazma */
-function typeMessage(text){
+function startChaos(){
+
+  // Emoji yağmuru
+  setInterval(()=>{
+    let emoji=document.createElement("div");
+    emoji.className="emoji";
+    emoji.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
+    emoji.style.left=Math.random()*100+"vw";
+    document.body.appendChild(emoji);
+    setTimeout(()=>emoji.remove(),3000);
+  },200);
+
+  // Konfeti patlaması
+  for(let i=0;i<150;i++){
+    let c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+
+  // 5 saniye sonra pastel moda geç
+  setTimeout(()=>{
+    document.body.style.background="linear-gradient(45deg,#ffdde1,#ee9ca7)";
+  },5000);
+}
+
+/* Harf harf yazı */
+function typeWriter(text){
   let i=0;
-  let msg=document.getElementById("message");
+  let msg=document.getElementById("messageBox");
   msg.innerText="";
   let typing=setInterval(()=>{
     msg.innerText+=text.charAt(i);
@@ -160,24 +210,16 @@ function typeMessage(text){
   },50);
 }
 
-/* Konfeti */
-function launchConfetti(){
-  for(let i=0;i<200;i++){
-    let c=document.createElement("div");
-    c.className="confetti";
-    c.style.left=Math.random()*100+"vw";
-    c.style.background=`hsl(${Math.random()*360},100%,60%)`;
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
-  }
+function showMessage1(){
+  typeWriter("İyi ki varsın ablam 💖 Hayatımın en güzel şansı sensin 👑");
 }
 
-/* Pastel romantik moda geçiş */
-function romanticMode(){
-  setTimeout(()=>{
-    document.body.style.background=
-      "linear-gradient(45deg,#ffdde1,#ee9ca7)";
-  },4000);
+function showMessage2(){
+  typeWriter("Yeni yaşın sana sağlık, mutluluk ve bol kahkaha getirsin ✨");
+}
+
+function showMessage3(){
+  typeWriter("Seni çok seviyorum 💌 Bu site bile sevgimi anlatmaya yetmez!");
 }
 
 </script>
