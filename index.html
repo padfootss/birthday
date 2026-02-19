@@ -34,7 +34,7 @@ h1{
 }
 
 .message-container{
-  height:170px;
+  height:200px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -43,7 +43,9 @@ h1{
 
 #messageBox{
   font-size:18px;
-  line-height:1.6;
+  line-height:1.8;
+  white-space:pre-wrap;
+  letter-spacing:0.3px;
 }
 
 .button-area{
@@ -97,16 +99,16 @@ button{
 </div>
 
 <div class="button-area">
-<button id="btn1" onclick="startEverything()">Partiyi Başlat 🎉</button>
-<button id="btn2" class="hidden" onclick="step2()">Devam Et ✨</button>
-<button id="btn3" class="hidden" onclick="step3()">Daha Fazlası 🥹</button>
-<button id="btn4" class="hidden" onclick="step4()">Son Mesaj 🤍</button>
+<button id="btn1">Partiyi Başlat 🎉</button>
+<button id="btn2" class="hidden">Devam Et ✨</button>
+<button id="btn3" class="hidden">Daha Fazlası 🥹</button>
+<button id="btn4" class="hidden">Son Mesaj 🤍</button>
 </div>
 
 <div id="countdown"></div>
 
-<audio id="music" loop playsinline preload="auto">
-  <source src="muzik.mp3" type="audio/mpeg">
+<audio id="music" loop preload="auto">
+  <source src="./muzik.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -125,13 +127,13 @@ function typeWriter(text){
   },40);
 }
 
-function startEverything(){
+document.getElementById("btn1").onclick=function(){
 
-  // Güvenli müzik başlat
-  music.currentTime=0;
-  music.play().catch(()=>{});
+  // iPhone için garanti tetikleme
+  music.muted=false;
+  music.play().then(()=>{}).catch(()=>{});
 
-  document.getElementById("btn1").classList.add("hidden");
+  this.classList.add("hidden");
 
   let count=3;
   let timer=setInterval(()=>{
@@ -142,34 +144,34 @@ function startEverything(){
       setTimeout(()=>{
         cd.innerText="";
         emojiRain();
-        typeWriter("İyi ki varsın ablam… Sen benim en büyük şansımsın. Yanımda olduğun sürece kendimi hep güvende hissediyorum.");
+        typeWriter("İyi ki varsın ablam...\n\nSen benim en büyük şansımsın.\nYanımda olduğun sürece kendimi hep güvende hissediyorum.");
         document.getElementById("btn2").classList.remove("hidden");
       },800);
     }
     count--;
   },1000);
-}
+};
 
-function step2(){
+document.getElementById("btn2").onclick=function(){
   emojiRain();
-  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın. Seninle büyümek benim için büyük bir mutluluk.");
-  document.getElementById("btn2").classList.add("hidden");
+  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın.\n\nSeninle büyümek benim için büyük bir mutluluk.");
+  this.classList.add("hidden");
   document.getElementById("btn3").classList.remove("hidden");
-}
+};
 
-function step3(){
+document.getElementById("btn3").onclick=function(){
   emojiRain();
-  typeWriter("Güçlü ve merhametli olduğun için seninle gurur duyuyorum. Hayat sana hep en güzelini getirsin.");
-  document.getElementById("btn3").classList.add("hidden");
+  typeWriter("Güçlü ve merhametli olduğun için seninle gurur duyuyorum.\n\nHayat sana hep en güzelini getirsin.");
+  this.classList.add("hidden");
   document.getElementById("btn4").classList.remove("hidden");
-}
+};
 
-function step4(){
+document.getElementById("btn4").onclick=function(){
   emojiRain();
   typeWriter("Seni kelimelerle anlatamayacak kadar çok seviyorum 🤍🎂✨");
-  document.getElementById("btn4").innerText="Seni Çok Seviyorum 🤍";
-  document.getElementById("btn4").disabled=true;
-}
+  this.innerText="Seni Çok Seviyorum 🤍";
+  this.disabled=true;
+};
 
 function emojiRain(){
   for(let i=0;i<25;i++){
