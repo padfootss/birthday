@@ -74,3 +74,51 @@ button {
 <body>
 
 <h1>Tıkla 🎁</h1>
+<button onclick="start()">BAŞLAT 💕</button>
+
+<div id="surprise">
+  İYİ Kİ DOĞDUN ❤️<br><br>
+  Kalbimi çaldın... ambulansla geri götür 😭🚑💖
+</div>
+
+<div id="ambulance">🚑</div>
+
+<audio id="music" src="muzik.mp3" loop></audio>
+
+<script>
+function start() {
+  document.getElementById("surprise").style.display = "block";
+  document.getElementById("music").play();
+  document.getElementById("ambulance").style.display = "block";
+  createConfetti();
+}
+
+// Kalpler
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+setInterval(createHeart, 300);
+
+// Konfeti
+function createConfetti() {
+  for(let i = 0; i < 150; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor =
+      "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
+}
+</script>
+
+</body>
+</html>
