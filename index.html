@@ -3,141 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>İyi Ki Doğdun 💖</title>
+<title>KAOS DOĞUM GÜNÜ 🎉</title>
 
 <style>
-body {
-  margin:0;
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  min-height:100vh;
   overflow:hidden;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #ff8fd8, #ff4da6);
-  color:white;
+  font-family:Arial, sans-serif;
   text-align:center;
+  color:white;
+  animation:bgChange 6s infinite alternate;
 }
 
-h1 {
-  margin-top:100px;
-  font-size:40px;
-  text-shadow: 0 0 15px white;
-  animation: glow 2s infinite alternate;
+/* Arka plan renk değişimi */
+@keyframes bgChange{
+  0%{background:#ff4da6;}
+  25%{background:#ff8fd8;}
+  50%{background:#ff0066;}
+  75%{background:#ff3399;}
+  100%{background:#ff66cc;}
 }
 
-@keyframes glow {
-  from { text-shadow: 0 0 10px white; }
-  to { text-shadow: 0 0 30px yellow; }
+/* Giriş ekranı */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle,#ff69b4,#da70d6);
+  z-index:9999;
 }
 
-button {
+#intro h1{
+  font-size:3rem;
+  margin-bottom:20px;
+  animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+  from{transform:translateY(0);}
+  to{transform:translateY(-15px);}
+}
+
+button{
   padding:15px 40px;
-  font-size:18px;
+  font-size:20px;
   border:none;
-  border-radius:40px;
+  border-radius:50px;
   background:white;
-  color:#ff4da6;
+  color:#ff0066;
   cursor:pointer;
-  transition:0.3s;
+  transition:.3s;
 }
+button:hover{transform:scale(1.1);}
 
-button:hover {
-  transform:scale(1.1);
-}
-
-#surprise {
+#mainContent{
   display:none;
-  margin-top:20px;
-  font-size:22px;
-  animation:fadeIn 2s ease-in-out;
+  padding-top:100px;
 }
 
-@keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
+#mainContent h1{
+  font-size:3rem;
+  animation:shakeText .5s infinite alternate;
 }
 
-.heart {
+@keyframes shakeText{
+  from{transform:translateX(-5px);}
+  to{transform:translateX(5px);}
+}
+
+/* Kalpler */
+.heart, .emoji{
   position:absolute;
-  top:-10px;
+  top:-20px;
   animation:fall linear infinite;
 }
 
-@keyframes fall {
-  to { transform:translateY(100vh); }
+@keyframes fall{
+  to{transform:translateY(110vh);}
 }
 
-.confetti {
+/* Konfeti */
+.confetti{
   position:absolute;
   width:8px;
   height:8px;
   animation:confettiFall 3s linear forwards;
 }
 
-@keyframes confettiFall {
-  to { transform:translateY(100vh) rotate(720deg); }
+@keyframes confettiFall{
+  to{transform:translateY(100vh) rotate(720deg);}
 }
 
-#ambulance {
+/* Ambulans */
+#ambulance{
   position:absolute;
   top:60%;
   left:-200px;
-  font-size:70px;
-  display:none;
-  animation:drive 6s linear forwards;
+  font-size:80px;
+  animation:drive 5s linear forwards;
 }
 
-@keyframes drive {
-  to { left:110%; }
-}
-
-#photo {
-  width:180px;
-  border-radius:20px;
-  margin-top:20px;
-  box-shadow:0 0 20px white;
-  display:none;
+@keyframes drive{
+  to{left:110%;}
 }
 </style>
 </head>
 
 <body>
 
-<h1>Hazır mısın? 🎉</h1>
-<button onclick="start()">SÜRPRİZİ AÇ 💕</button>
-
-<div id="surprise">
-  İYİ Kİ DOĞDUN ❤️<br><br>
-  Hayatımın en güzel tesadüfü sensin ✨<br>
-  Kalbimi çaldın... ambulansla geri getir 🚑💖
+<div id="intro">
+  <h1>Hazır mısın? 🎉</h1>
+  <button onclick="start()">KAOSU BAŞLAT 💥</button>
 </div>
 
-<img id="photo" src="foto.jpg">
-
-<div id="ambulance">🚑</div>
+<div id="mainContent">
+  <h1>İYİ Kİ DOĞDUNNN ❤️🔥</h1>
+  <p style="margin-top:20px;font-size:20px;">
+    Kalbimi çaldın ambulans çağırdım 🚑😭
+  </p>
+  <div id="ambulance">🚑</div>
+</div>
 
 <audio id="music" src="muzik.mp3" loop></audio>
 
 <script>
-function start() {
-  document.getElementById("surprise").style.display="block";
-  document.getElementById("photo").style.display="block";
+function start(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("mainContent").style.display="block";
   document.getElementById("music").play();
-  document.getElementById("ambulance").style.display="block";
   createConfetti();
+  shakeScreen();
 }
 
+/* Kalpler */
 function createHeart(){
-  const heart=document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML="💖";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(Math.random()*3+2)+"s";
-  heart.style.fontSize=(Math.random()*20+15)+"px";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),5000);
+  const h=document.createElement("div");
+  h.classList.add("heart");
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(Math.random()*2+2)+"s";
+  h.style.fontSize=(Math.random()*20+15)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),4000);
 }
-setInterval(createHeart,300);
+setInterval(createHeart,200);
 
+/* Emojiler */
+function createEmoji(){
+  const e=document.createElement("div");
+  e.classList.add("emoji");
+  const emojis=["🔥","🎉","💃","✨","🎆","💥"];
+  e.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+"vw";
+  e.style.animationDuration=(Math.random()*2+2)+"s";
+  e.style.fontSize=(Math.random()*25+20)+"px";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),4000);
+}
+setInterval(createEmoji,300);
+
+/* Konfeti */
 function createConfetti(){
-  for(let i=0;i<200;i++){
+  for(let i=0;i<400;i++){
     const c=document.createElement("div");
     c.classList.add("confetti");
     c.style.left=Math.random()*100+"vw";
@@ -146,6 +179,20 @@ function createConfetti(){
     document.body.appendChild(c);
     setTimeout(()=>c.remove(),3000);
   }
+}
+
+/* Ekran titreşimi */
+function shakeScreen(){
+  let i=0;
+  const interval=setInterval(()=>{
+    document.body.style.transform=
+      "translate("+(Math.random()*15-7)+"px,"+(Math.random()*15-7)+"px)";
+    i++;
+    if(i>25){
+      clearInterval(interval);
+      document.body.style.transform="translate(0,0)";
+    }
+  },40);
 }
 </script>
 
