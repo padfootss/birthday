@@ -2,195 +2,183 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>İyi ki Varsın Ablam 💖</title>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, system-ui, sans-serif;
-    text-align: center;
-    color: white;
-    background: #0f0c29;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+body{
+  margin:0;
+  font-family:-apple-system,system-ui,sans-serif;
+  text-align:center;
+  background:#0f0c29;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
+}
 
-  .header-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+.header-container{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
 
-  h1 {
-    font-size: clamp(30px, 8vw, 60px);
-    color: #ff66cc;
-    text-shadow: 0 0 15px #ff1493;
-    margin: 0;
-    width: 100%;
-  }
+h1{
+  font-size:clamp(30px,8vw,60px);
+  color:#ff66cc;
+  text-shadow:0 0 20px #ff1493;
+  margin:0;
+}
 
-  .message-container {
-    height: 180px;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.message-container{
+  height:170px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 20px;
+}
 
-  #messageBox {
-    font-size: 18px;
-    line-height: 1.6;
-    word-wrap: break-word;
-    max-width: 100%;
-  }
+#messageBox{
+  font-size:18px;
+  line-height:1.6;
+}
 
-  .button-area {
-    padding-bottom: 50px;
-    height: 90px;
-  }
+.button-area{
+  padding-bottom:40px;
+}
 
-  button {
-    padding: 16px 25px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 30px;
-    background: white;
-    color: #302b63;
-    width: 80%;
-    max-width: 280px;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 5px 20px rgba(255,102,204,0.4);
-  }
+button{
+  padding:16px 25px;
+  font-size:18px;
+  font-weight:bold;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#302b63;
+  width:80%;
+  max-width:280px;
+  box-shadow:0 5px 20px rgba(255,102,204,0.4);
+}
 
-  .hidden { display: none !important; }
+.hidden{display:none;}
 
-  .emoji {
-    position: absolute;
-    font-size: 25px;
-    animation: fall 3s linear forwards;
-    pointer-events: none;
-  }
+.emoji{
+  position:absolute;
+  font-size:25px;
+  animation:fall 3s linear forwards;
+}
 
-  @keyframes fall {
-    from { transform: translateY(-10vh); }
-    to { transform: translateY(110vh); }
-  }
+@keyframes fall{
+  from{transform:translateY(-10vh);}
+  to{transform:translateY(110vh);}
+}
 
-  #countdown {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 70px;
-    font-weight: bold;
-    color: #ff66cc;
-    z-index: 999;
-  }
+#countdown{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:70px;
+  color:#ff66cc;
+}
 </style>
 </head>
 <body>
 
 <div class="header-container">
-  <h1>İYİ Kİ VARSIN ABLAM 💖</h1>
+<h1>İYİ Kİ VARSIN ABLAM 💖</h1>
 </div>
 
 <div class="message-container">
-  <div id="messageBox"></div>
+<div id="messageBox"></div>
 </div>
 
 <div class="button-area">
-  <button id="btn1" onclick="startEverything()">Partiyi Başlat 🎉</button>
-  <button id="btn2" class="hidden" onclick="step2()">Devam Et... ✨</button>
-  <button id="btn3" class="hidden" onclick="step3()">Daha Fazlası... 🥹</button>
-  <button id="btn4" class="hidden" onclick="step4()">Son Mesajım 🤍</button>
+<button id="btn1" onclick="startEverything()">Partiyi Başlat 🎉</button>
+<button id="btn2" class="hidden" onclick="step2()">Devam Et ✨</button>
+<button id="btn3" class="hidden" onclick="step3()">Daha Fazlası 🥹</button>
+<button id="btn4" class="hidden" onclick="step4()">Son Mesaj 🤍</button>
 </div>
 
 <div id="countdown"></div>
 
 <audio id="music" loop playsinline preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="muzik.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const music = document.getElementById("music");
-const msgBox = document.getElementById("messageBox");
-const cd = document.getElementById("countdown");
+const music=document.getElementById("music");
+const msgBox=document.getElementById("messageBox");
+const cd=document.getElementById("countdown");
 
-function typeWriter(text) {
-  let i = 0;
-  msgBox.innerText = "";
-  clearInterval(window.tInterval);
-  window.tInterval = setInterval(() => {
-    msgBox.innerText += text.charAt(i);
+function typeWriter(text){
+  let i=0;
+  msgBox.innerText="";
+  clearInterval(window.t);
+  window.t=setInterval(()=>{
+    msgBox.innerText+=text.charAt(i);
     i++;
-    if(i >= text.length) clearInterval(window.tInterval);
-  }, 45);
+    if(i>=text.length) clearInterval(window.t);
+  },40);
 }
 
-function startEverything() {
+function startEverything(){
 
-  // Güvenli müzik başlatma
-  music.currentTime = 0;
-  music.play().catch(() => {});
+  // Güvenli müzik başlat
+  music.currentTime=0;
+  music.play().catch(()=>{});
 
   document.getElementById("btn1").classList.add("hidden");
 
-  let count = 3;
-  let timer = setInterval(() => {
-    cd.innerText = count;
-
-    if(count <= 0) {
+  let count=3;
+  let timer=setInterval(()=>{
+    cd.innerText=count;
+    if(count<=0){
       clearInterval(timer);
-      cd.innerText = "🎂";
-
-      setTimeout(() => {
-        cd.innerText = "";
+      cd.innerText="🎂";
+      setTimeout(()=>{
+        cd.innerText="";
         emojiRain();
-        typeWriter("İyi ki varsın ablam… Sen benim için sadece bir abla değil, bazen annem, bazen sırdaşım, bazen de en yakın arkadaşımsın. Sen yanımdayken kendimi hep daha güvende hissediyorum.");
+        typeWriter("İyi ki varsın ablam… Sen benim en büyük şansımsın. Yanımda olduğun sürece kendimi hep güvende hissediyorum.");
         document.getElementById("btn2").classList.remove("hidden");
-      }, 800);
+      },800);
     }
-
     count--;
-  }, 1000);
+  },1000);
 }
 
-function step2() {
+function step2(){
   emojiRain();
-  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın. Seninle büyümek benim en büyük şanslarımdan biri oldu.");
+  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın. Seninle büyümek benim için büyük bir mutluluk.");
   document.getElementById("btn2").classList.add("hidden");
   document.getElementById("btn3").classList.remove("hidden");
 }
 
-function step3() {
+function step3(){
   emojiRain();
-  typeWriter("Hem güçlü hem merhametli olduğun için seninle gurur duyuyorum 🥹 Hayat sana hep en güzelini getirsin.");
+  typeWriter("Güçlü ve merhametli olduğun için seninle gurur duyuyorum. Hayat sana hep en güzelini getirsin.");
   document.getElementById("btn3").classList.add("hidden");
   document.getElementById("btn4").classList.remove("hidden");
 }
 
-function step4() {
+function step4(){
   emojiRain();
-  typeWriter("İyi ki benim ablam olmuşsun… Seni kelimelerle anlatamayacak kadar çok seviyorum 🤍🎂✨");
-
-  document.getElementById("btn4").innerText = "Seni Çok Seviyorum 🤍";
-  document.getElementById("btn4").disabled = true;
+  typeWriter("Seni kelimelerle anlatamayacak kadar çok seviyorum 🤍🎂✨");
+  document.getElementById("btn4").innerText="Seni Çok Seviyorum 🤍";
+  document.getElementById("btn4").disabled=true;
 }
 
-function emojiRain() {
+function emojiRain(){
   for(let i=0;i<25;i++){
-    let emoji=document.createElement("div");
-    emoji.className="emoji";
-    emoji.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
-    emoji.style.left=Math.random()*100+"vw";
-    document.body.appendChild(emoji);
-    setTimeout(()=>emoji.remove(),3000);
+    let e=document.createElement("div");
+    e.className="emoji";
+    e.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
+    e.style.left=Math.random()*100+"vw";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),3000);
   }
 }
 </script>
