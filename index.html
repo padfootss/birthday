@@ -10,72 +10,64 @@ body{
   margin:0;
   font-family:-apple-system,system-ui,sans-serif;
   text-align:center;
-  background:#0f0c29;
   color:white;
   display:flex;
   flex-direction:column;
   height:100vh;
   overflow:hidden;
+  background: linear-gradient(-45deg, #ff758c, #ff7eb3, #a18cd1, #fad0c4);
+  background-size:400% 400%;
+  animation:gradientBG 12s ease infinite;
 }
 
-.header-container{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+@keyframes gradientBG{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
 h1{
   font-size:clamp(30px,8vw,60px);
-  color:#ff66cc;
-  text-shadow:0 0 20px #ff1493;
-  margin:0;
+  margin:40px 20px 10px;
+  animation:pulse 2s infinite;
 }
 
-.message-container{
-  height:200px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0 20px;
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
 }
 
 #messageBox{
-  font-size:18px;
-  line-height:1.8;
-  white-space:pre-wrap;
-  letter-spacing:0.3px;
-}
-
-.button-area{
-  padding-bottom:40px;
+  padding:20px;
+  font-size:19px;
+  line-height:1.9;
+  white-space:pre-line;
+  word-spacing:2px;
 }
 
 button{
-  padding:16px 25px;
+  padding:15px 25px;
+  margin:10px;
   font-size:18px;
-  font-weight:bold;
   border:none;
   border-radius:30px;
   background:white;
-  color:#302b63;
-  width:80%;
-  max-width:280px;
-  box-shadow:0 5px 20px rgba(255,102,204,0.4);
+  color:#ff4d6d;
+  font-weight:bold;
 }
 
 .hidden{display:none;}
 
-.emoji{
+.heart{
   position:absolute;
-  font-size:25px;
-  animation:fall 3s linear forwards;
+  color:#ff4d6d;
+  animation:floatUp linear forwards;
 }
 
-@keyframes fall{
-  from{transform:translateY(-10vh);}
-  to{transform:translateY(110vh);}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) scale(1); opacity:1;}
+  100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
 }
 
 #countdown{
@@ -84,30 +76,23 @@ button{
   left:50%;
   transform:translate(-50%,-50%);
   font-size:70px;
-  color:#ff66cc;
 }
 </style>
 </head>
 <body>
 
-<div class="header-container">
 <h1>İYİ Kİ VARSIN ABLAM 💖</h1>
-</div>
 
-<div class="message-container">
 <div id="messageBox"></div>
-</div>
 
-<div class="button-area">
-<button id="btn1">Partiyi Başlat 🎉</button>
-<button id="btn2" class="hidden">Devam Et ✨</button>
-<button id="btn3" class="hidden">Daha Fazlası 🥹</button>
-<button id="btn4" class="hidden">Son Mesaj 🤍</button>
-</div>
+<button id="btn1">Başlat 🎉</button>
+<button id="btn2" class="hidden">2️⃣</button>
+<button id="btn3" class="hidden">3️⃣</button>
+<button id="btn4" class="hidden">4️⃣</button>
 
 <div id="countdown"></div>
 
-<audio id="music" loop preload="auto">
+<audio id="music" loop>
   <source src="./muzik.mp3" type="audio/mpeg">
 </audio>
 
@@ -118,71 +103,77 @@ const cd=document.getElementById("countdown");
 
 function typeWriter(text){
   let i=0;
-  msgBox.innerText="";
+  msgBox.textContent="";
   clearInterval(window.t);
   window.t=setInterval(()=>{
-    msgBox.innerText+=text.charAt(i);
+    msgBox.textContent+=text[i];
     i++;
     if(i>=text.length) clearInterval(window.t);
-  },40);
+  },35);
 }
 
-document.getElementById("btn1").onclick=function(){
-
-  // iPhone için garanti tetikleme
-  music.muted=false;
-  music.play().then(()=>{}).catch(()=>{});
-
-  this.classList.add("hidden");
-
-  let count=3;
-  let timer=setInterval(()=>{
-    cd.innerText=count;
-    if(count<=0){
-      clearInterval(timer);
-      cd.innerText="🎂";
-      setTimeout(()=>{
-        cd.innerText="";
-        emojiRain();
-        typeWriter("İyi ki varsın ablam...\n\nSen benim en büyük şansımsın.\nYanımda olduğun sürece kendimi hep güvende hissediyorum.");
-        document.getElementById("btn2").classList.remove("hidden");
-      },800);
-    }
-    count--;
-  },1000);
-};
-
-document.getElementById("btn2").onclick=function(){
-  emojiRain();
-  typeWriter("Çocukluğumun en güzel anılarında hep sen varsın.\n\nSeninle büyümek benim için büyük bir mutluluk.");
-  this.classList.add("hidden");
-  document.getElementById("btn3").classList.remove("hidden");
-};
-
-document.getElementById("btn3").onclick=function(){
-  emojiRain();
-  typeWriter("Güçlü ve merhametli olduğun için seninle gurur duyuyorum.\n\nHayat sana hep en güzelini getirsin.");
-  this.classList.add("hidden");
-  document.getElementById("btn4").classList.remove("hidden");
-};
-
-document.getElementById("btn4").onclick=function(){
-  emojiRain();
-  typeWriter("Seni kelimelerle anlatamayacak kadar çok seviyorum 🤍🎂✨");
-  this.innerText="Seni Çok Seviyorum 🤍";
-  this.disabled=true;
-};
-
-function emojiRain(){
+function heartRain(){
   for(let i=0;i<25;i++){
-    let e=document.createElement("div");
-    e.className="emoji";
-    e.innerHTML=["💖","🎂","🎉","🥳","👑"][Math.floor(Math.random()*5)];
-    e.style.left=Math.random()*100+"vw";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),3000);
+    let h=document.createElement("div");
+    h.className="heart";
+    h.textContent=["💖","💗","💞","💕","💓"][Math.floor(Math.random()*5)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(20+Math.random()*25)+"px";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
   }
 }
+
+btn1.onclick=function(){
+  music.play().catch(()=>{});
+  this.classList.add("hidden");
+  heartRain();
+  typeWriter(`İyi ki varsın ablam…
+
+Hayatımda senin yerini doldurabilecek (diğer ablamlarım hariç 😅) kimse yok.
+
+Sen benim için sadece bir abla değil;
+bazen annem,
+bazen sırdaşım,
+bazen de en yakın arkadaşımsın.
+
+Sen yanımdayken kendimi hep daha güvende hissediyorum. 💖`);
+  btn2.classList.remove("hidden");
+};
+
+btn2.onclick=function(){
+  heartRain();
+  typeWriter(`Çocukluğumun en güzel anılarında hep sen de varsın.
+
+Seninle büyümek benim en büyük şanslarımdan biri oldu. 💞`);
+  this.classList.add("hidden");
+  btn3.classList.remove("hidden");
+};
+
+btn3.onclick=function(){
+  heartRain();
+  typeWriter(`Hem güçlü hem de merhametli olduğun için seninle gurur duyuyorum abla 🥹
+
+Hayat sana hep en güzelini getirsin,
+yüzün hep gülsün,
+kalbin hep huzur dolu olsun.
+
+Çünkü sen her şeyin en iyisini hak ediyorsun. 💗`);
+  this.classList.add("hidden");
+  btn4.classList.remove("hidden");
+};
+
+btn4.onclick=function(){
+  heartRain();
+  typeWriter(`İyi ki benim ablam olmuşsun…
+
+İyi ki aynı çatı altında büyümüşüz.
+
+Seni kelimelerle anlatamayacak kadar çok seviyorum. 💖💞`);
+  this.disabled=true;
+  this.textContent="Seni Çok Seviyorum 💖";
+};
 </script>
 
 </body>
